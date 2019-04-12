@@ -1,0 +1,25 @@
+#!groovy
+
+node ('master'){
+
+  def mvn = tool 'apache-maven-3.6.0'
+
+	    stage ('Get Source Code'){
+            try{
+                checkout scm 
+            }catch(err){
+                throw err
+                }
+    	}
+
+    	
+
+    	stage ('Build & Package'){
+            try{
+            	sh"'${mvn}/bin/mvn' clean package deploy -DskipTests" 
+            	
+        	}catch(err){
+            	throw err
+            	}
+    	}
+}
